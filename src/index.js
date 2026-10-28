@@ -117,7 +117,7 @@ function construirRutaSalida(rutaEntrada, modo) {
     const extension = path.extname(rutaEntrada);
     const nombre = path.basename(rutaEntrada, extension);
 
-    return path.join(directorio, `${nombre}_${modo}${extension}`);
+    return path.join(directorio, `${nombre}_${modo}.txt`);
 }
 
 async function procesarArchivo(rutaEntrada, modo, archivoOriginal) {
