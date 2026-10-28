@@ -1,11 +1,12 @@
 {
   "name": "asistente_ia_fetch",
   "version": "1.0.0",
-  "description": "",
+  "description": "Asistente de IA de consola que resume, explica, cuestiona y traduce apuntes usando fetch",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "historial": "node src/index.js historial",
+    "transcribir": "node src/transcribir.js"
   },
   "keywords": [],
   "author": "",

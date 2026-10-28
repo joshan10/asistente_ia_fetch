@@ -1,3 +1,9 @@
 node_modules/
 .env
 data/
+apuntes/*_resumir.*
+apuntes/*_explicar.*
+apuntes/*_preguntas.*
+apuntes/*_traducir.*
+audio/*_transcription.txt
+audio/*_resumen.txt
