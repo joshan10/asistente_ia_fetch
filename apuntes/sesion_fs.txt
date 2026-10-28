@@ -1,0 +1,50 @@
+Sesión 4: manejo de archivos con el módulo fs de Node.js
+
+El módulo fs permite interactuar con el sistema de archivos. En CommonJS se importa con require('fs'). Para operaciones asíncronas se puede usar fs.promises o las funciones con callback. En los proyectos modernos conviene combinar fs.promises con async/await para que el código sea más fácil de leer.
+
+Leer un archivo:
+const fs = require('fs');
+const contenido = await fs.promises.readFile('datos.txt', 'utf8');
+El segundo argumento, 'utf8', indica que el contenido se devuelve como texto y no como Buffer.
+
+Escribir un archivo:
+await fs.promises.writeFile('salida.txt', contenido, 'utf8');
+writeFile reemplaza todo el contenido del archivo. Si el archivo no existe, lo crea. Si la carpeta no existe, genera un error.
+
+Agregar contenido sin borrar lo anterior:
+await fs.promises.appendFile('salida.txt', nuevaLinea, 'utf8');
+appendFile es útil para bitácoras e historiales porque conserva lo que ya estaba escrito.
+
+Verificar si un archivo existe:
+if (fs.existsSync('datos.txt')) { ... }
+existsSync es síncrono y sirve para validaciones sencillas antes de leer.
+
+Construir rutas con path:
+path.join une partes de una ruta usando el separador del sistema operativo.
+path.dirname devuelve la carpeta de una ruta.
+path.basename devuelve el nombre del archivo y permite quitar la extensión.
+path.extname devuelve la extensión, por ejemplo .txt.
+Estas funciones evitan concatenar cadenas a mano y hacen que el programa funcione en distintos sistemas.
+
+Ejemplo para guardar un resultado junto al archivo de entrada:
+const extension = path.extname(rutaEntrada);
+const nombre = path.basename(rutaEntrada, extension);
+const rutaSalida = path.join(path.dirname(rutaEntrada), `${nombre}_resumen${extension}`);
+
+Manejo de errores:
+Las operaciones de fs pueden fallar si el archivo no existe, si no hay permisos o si la ruta es incorrecta. Por eso deben ir dentro de try/catch cuando se usan con async/await. Es mejor mostrar un mensaje claro al usuario que dejar que el programa termine con un error técnico.
+
+JSON:
+JSON.stringify convierte un objeto o arreglo en texto.
+JSON.parse convierte texto en un objeto o arreglo.
+Al guardar un historial en JSON conviene validar que el archivo no esté vacío y que el contenido sea un arreglo antes de recorrerlo. Si el archivo está dañado, se puede informar al usuario y crear uno nuevo.
+
+Variables de entorno:
+process.env permite leer variables de entorno. process.loadEnvFile carga un archivo .env cuando se trabaja con Node.js 20.12 o superior. Las claves de API nunca deben escribirse directamente en el código ni subirse a Git.
+
+Buenas prácticas:
+Validar los argumentos de process.argv.
+Usar process.exitCode = 1 cuando ocurre un error.
+Separar la lógica de la API en un módulo reutilizable.
+No imprimir secretos en la consola.
+Mantener los mensajes de error en español y con una indicación de cómo solucionar el problema.
